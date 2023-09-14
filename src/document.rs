@@ -23,11 +23,19 @@ impl Document {
         Document(vec![])
     }
 
-    pub fn add(&mut self, syntax: Syntax, content: String) {
-        self.0.push(Block {
-            syntax: syntax,
-            content: content,
-        });
+    pub fn append(&mut self, syntax: Syntax, content: String) {
+        type S = Syntax;
+        let block = self.0.last_mut().filter(|b| b.syntax == S::P && syntax == S::P);
+
+        if let Some(b) = block {
+            b.content.push(' ');
+            b.content.push_str(&content);
+        } else {
+            self.0.push(Block {
+                syntax: syntax,
+                content: content,
+            });
+        }
     }
 
     pub fn print(&self) {

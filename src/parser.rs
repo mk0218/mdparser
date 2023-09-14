@@ -19,7 +19,7 @@ impl MDParser {
                 Err(why) => panic!("Couldn't read the file: {}", why),
             };
             let (syntax, content) = LineParser::parse(&line);
-            document.add(syntax, content);
+            document.append(syntax, content);
         }
     
         Ok(document)
